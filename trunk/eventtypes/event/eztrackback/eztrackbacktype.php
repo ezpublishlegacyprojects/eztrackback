@@ -59,7 +59,7 @@ class eZTrackbackType extends eZWorkflowEventType
                 {
                     $trackback->set( 'url', $match );
 
-                    if ( $trackback->autodiscover( ) === true ) 
+                    if ( $trackback->autodiscover( ) === true )
                     {
                         if ( PEAR::isError( $res = $trackback->send( $data ) ) )
                             eZDebug::writeError( $res->getMessage() );
