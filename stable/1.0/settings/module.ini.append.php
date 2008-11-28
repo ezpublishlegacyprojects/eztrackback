@@ -1,7 +1,0 @@
-<?php /*
-
-[ModuleSettings]
-ExtensionRepositories[]=eztrackback
-
-*/
-?>
