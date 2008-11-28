@@ -39,12 +39,11 @@ class eZTrackbackType extends eZWorkflowEventType
             $dataMap = $object->dataMap();
 
             // Prepare data for trackback
-            $data['id']         = $object->attribute( 'main_node_id' );
-            $data['title']      = strip_tags( $dataMap[$titleAttribute]->DataText );
-            $data['excerpt']    = preg_replace('/\s+/', ' ', strip_tags( $dataMap[$excerptAttribute]->DataText ) );
-            $data['excerpt']    = ( strlen( $data['excerpt'] ) > 200 ) ? substr( $data['excerpt'], 0, 197 ) . '...' : $data['excerpt'];
-            $data['url']        = 'http://' . $siteURL . '/content/view/full/' . $object->attribute( 'main_node_id' );
-            $data['blog_name']  = $trackbackINI->variable( 'TrackbackSettings', 'BlogName' );
+            $data['id'] = $object->attribute( 'main_node_id' );
+            $data['title'] = strip_tags( $dataMap[$titleAttribute]->DataText );
+            $data['excerpt'] = preg_replace('/\s+/', ' ', strip_tags( $dataMap[$excerptAttribute]->DataText ) );
+            $data['excerpt'] = ( strlen( $data['excerpt'] ) > 200 ) ? substr( $data['excerpt'], 0, 197 ) . '...' : $data['excerpt'];
+            $data['blog_name'] = $trackbackINI->variable( 'TrackbackSettings', 'BlogName' );
 
             $trackback = Services_Trackback::create( $data, array( 'fetchlines' => $fetchLines, 
                                                                    'httprequest' => array( 'useragent' => 'eZ Publish' ) ) );
