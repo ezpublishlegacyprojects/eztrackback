@@ -33,8 +33,7 @@ if ( !$res ) {
     $excerpt = $trackback->get( 'excerpt' );
     $blogName = $trackback->get( 'blog_name' );
     
-    $existingObject = eZPersistentObject::fetchObject( eZContentObject::definition(), null,
-                                                        array( 'remote_id' => 'Trackback_'.$parentNodeID.'_'.md5( $url ) ) );
+    $existingObject = eZPersistentObject::fetchObject( eZContentObject::definition(), null, array( 'remote_id' => 'Trackback_'.$parentNodeID.'_'.md5( $url ) ) );
     $createNew = true;
     
     if( $existingObject != null )
