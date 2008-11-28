@@ -60,11 +60,11 @@ Installing eZ Trackback extension
    with id "trackback_urls". If you want use different attribute ID, remeber to change settings/trackback.ini(.append.php) in 
    eztrackback extension directory.
 
-   If this attribute already exists in your weblog class, you can skip this part.
+   If this attribute already exists in your blog class, you can skip this part.
 
    Adjust [BlogClassSettings] in settings/trackback.ini(.append.php) in eztrackback extension directory
 
-7. Put the following code in weblog full view template
+7. Put the following code in blog full view template
 
    <!--
    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
