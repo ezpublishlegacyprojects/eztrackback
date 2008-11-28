@@ -46,7 +46,8 @@ class eZTrackbackType extends eZWorkflowEventType
             $data['url']        = 'http://' . $siteURL . '/content/view/full/' . $object->attribute( 'main_node_id' );
             $data['blog_name']  = $trackbackINI->variable( 'TrackbackSettings', 'BlogName' );
 
-            $trackback = Services_Trackback::create( $data, array( 'fetchlines' => $fetchLines, 'httprequest' => array( 'useragent' => 'eZ Publish' ) ) );
+            $trackback = Services_Trackback::create( $data, array( 'fetchlines' => $fetchLines, 
+                                                                   'httprequest' => array( 'useragent' => 'eZ Publish' ) ) );
 
             $regex = '/((http|https|ftp):\/\/|www)[a-z0-9\-\._]+\/?[a-z0-9_\.\-\?\+\/~=&#;,]*[a-z0-9\/]{1}/si';
             

@@ -106,7 +106,7 @@ if ( !$res ) {
         $contentObject->setAttribute( 'remote_id', 'Trackback_'.$ID.'_'.md5( $url ) );
         $contentObject->store();
 
-        $contentObject->setAttribute( 'status', EZ_VERSION_STATUS_DRAFT );
+        $contentObject->setAttribute( 'status', eZContentObjectVersion::STATUS_DRAFT );
         $contentObject->store();
         $db->commit();
             
