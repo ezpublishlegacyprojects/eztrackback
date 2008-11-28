@@ -1,4 +1,4 @@
-eZ TrackBack extension INSTALL
+eZ Trackback extension INSTALL
 
 Introduction
 ============
@@ -6,15 +6,15 @@ Introduction
 1. Requirements
    ------------
 
-   The following requirements exists for using eZ TrackBack extension:
+   The following requirements exists for using eZ Trackback extension:
 
-   o  eZ publish version:
+   o  eZ Publish version:
 
-      Make sure you use eZ publish version 3.7 or higher.
+      Make sure you use eZ Publish version 4.x or higher.
 
    o  PHP version:
 
-      Make sure you have PHP 4.4 or higher.
+      Make sure you have PHP 5,1 or higher.
 
    o  PEAR packages:
 
@@ -25,40 +25,44 @@ Introduction
 
      Look on pear.php.net for more information.
 
-Getting eZ publish
+     This extension was successfully tested with Services_Trackback 0.6.2
+
+Getting eZ Publish
 ==================
 
-You can download a version of eZ publish from ez.no, you will find the
+You can download a version of eZ Publish from ez.no, you will find the
 various versions at:
-http://ez.no/ez_publish/download/all_releases/ez_publish_3_stable_releases
+http://ez.no/download
 
-NOTE: You will require eZ publish 3.7 or higher
+NOTE: You will require eZ Publish 4.x or higher
 
-Information on the installation of eZ publish can be found at:
-http://ez.no/ez_publish/documentation/installation
+Information on the installation of eZ Publish can be found at:
+http://ez.no/doc
 
 
-Installing eZ TrackBack extension
+Installing eZ Trackback extension
 =================================
 
-1. Copy the package into the 'extension' directory in the root of your eZ publish installation.
+1. Copy the package into the 'extension' directory in the root of your eZ Publish installation.
 
 2. Unpack the files in the distribution.
 
-3. We must now enable the extension in eZ publish. To do this edit site.ini.append(.php) in the 
+3. We must now enable the extension in eZ Publish. To do this edit site.ini.append(.php) in the 
    folder root_of_ezpublish/settings. If this file does not exist; create it. Locate (or add)
    the block [ExtensionSettings] and add the line:
    ActiveExtensions[]=eztrackback
 
-4. Import eztrackback-1.0-1 package in to eZ publish. This package contains trackback content class definition.
+4. Import eztrackback-1.0-1 package in to eZ Publish. This package contains trackback content class definition.
 
 5. Crete new worflow with trackback event (Setup->Workflows), next assign workflow to trigger after-publish (Setup->Triggers).
 
-6. Extend your weblog class with new text string attribute called "Send trackbacks to: (Separate multiple URIs with spaces)"
+6. Extend your blog class with new text string attribute called "Send trackbacks to: (Separate multiple URIs with spaces)"
    with id "trackback_urls". If you want use different attribute ID, remeber to change settings/trackback.ini(.append.php) in 
    eztrackback extension directory.
 
    If this attribute already exists in your weblog class, you can skip this part.
+
+   Adjust [BlogClassSettings] in settings/trackback.ini(.append.php) in eztrackback extension directory
 
 7. Put the following code in weblog full view template
 
@@ -68,30 +72,28 @@ Installing eZ TrackBack extension
      xmlns:dc="http://purl.org/dc/elements/1.1/">
      <rdf:Description
         rdf:about="BLOG_ABOUT_HERE"
-        trackback:ping="{concat('http://',ezini('SiteSettings','SiteURL','site.ini'),'/trackback/id/',$node.node_id)}"
-        dc:title="BLOG_TITLE_HERE"
-        dc:identifier={concat('http://',ezini('SiteSettings','SiteURL','site.ini'),'/',$node.url_alias)|ezurl} />
+        trackback:ping="{concat( '/trackback/id/',$node.node_id )|ezurl( 'no', 'full' )}"
+        dc:title="{$node.parent.name|wash()}"
+        dc:identifier="{$node.url_alias|ezurl( 'no', 'full' )}" />
    </rdf:RDF> 
    -->
-   
+
 8. Give Anonymous User read permissions to 'trackback' module.
 
-9. In extension/eztrackback/settings/trackback.ini(.append.php) file set your weblog name and weblog class identifier and other settings.
+9. In extension/eztrackback/settings/trackback.ini(.append.php) file set your blog name and blog class identifier and other settings.
 
-10. For displaying the trackbacks use this code in weblog full view template.
+10. For displaying the trackbacks use this code in blog full view template.
 
-    <h2>{"TrackBacks"|i18n("design/base")}</h2>
+    <h2>{"Trackbacks"|i18n("extension/eztrackback")}</h2>
 
     <div class="content-view-children">
-      {section var=trackback loop=fetch_alias( trackbacks, hash( parent_node_id, $node.node_id ) )}
-        {node_view_gui view='line' content_node=$trackback}
-      {/section}
-   </div>
+        {foreach fetch_alias( trackbacks, hash( parent_node_id, $node.node_id ) ) as $trackback}
+            {node_view_gui view='line' content_node=$trackback}
+        {/foreach}
+    </div>
 
 Known problems
 ==============
 
-TrackBacks inside the same installation (database) does not work due a problem with transactions.
+Trackbacks inside the same installation (database) does not work due a problem with transactions.
 Workaround: Disable DatabaseTransactions in DatabaseSettings of site.ini
-
-
