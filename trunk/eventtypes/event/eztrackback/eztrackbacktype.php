@@ -44,6 +44,9 @@ class eZTrackbackType extends eZWorkflowEventType
             $data['excerpt'] = preg_replace('/\s+/', ' ', strip_tags( $dataMap[$excerptAttribute]->DataText ) );
             $data['excerpt'] = ( strlen( $data['excerpt'] ) > 200 ) ? substr( $data['excerpt'], 0, 197 ) . '...' : $data['excerpt'];
             $data['blog_name'] = $trackbackINI->variable( 'TrackbackSettings', 'BlogName' );
+            $url = $object->mainNode()->urlAlias();
+            eZUri::transformURI( $url, false, 'full' );
+            $data['url'] = $url;
 
             $trackback = Services_Trackback::create( $data, array( 'fetchlines' => $fetchLines, 
                                                                    'httprequest' => array( 'useragent' => 'eZ Publish' ) ) );
